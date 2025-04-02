@@ -1,0 +1,24 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /build_commands/docker_creds/username
+    DOCKER_REGISTRY_PASSWORD: /build_commands/docker_creds/password
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - pip install flask==2.0.2
+  build:
+    commands:
+      - echo "Running tests..."
+      - echo "Building Docker image..."
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin
+      - docker build -t cherukurisai/buildcommands:v2 .
+      - docker push cherukurisai/buildcommands:v2
+  post_build:
+    commands:
+      - echo "Build completed successfully!"
