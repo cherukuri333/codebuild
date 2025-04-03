@@ -5,4 +5,4 @@ set -e
 docker pull cherukurisai/buildcommands:v2
 
 # Run the Docker image as a container
-docker run -d -p 5000:5000 cherukurisai/buildcommands:v2
+docker run -d -p 7000:7000 cherukurisai/buildcommands:v2
